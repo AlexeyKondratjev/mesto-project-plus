@@ -1,6 +1,5 @@
-import { NextFunction, Response } from "express";
-import { ICustomRequest } from "../utils/types";
-
+import { NextFunction, Response } from 'express';
+import { ICustomRequest } from '../utils/types';
 
 export const tempAuth = (req: ICustomRequest, res: Response, next: NextFunction) => {
   req.user = {
@@ -8,4 +7,4 @@ export const tempAuth = (req: ICustomRequest, res: Response, next: NextFunction)
   };
 
   next();
-}
+};
