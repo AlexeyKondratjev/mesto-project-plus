@@ -1,7 +1,8 @@
-import { BadRequestError, InternalServerError, NotFoundError } from "../errors/errors"
-import { Request } from "express"
-import { ObjectId, Schema } from "mongoose"
-
+import { Request } from 'express';
+import { ObjectId, Schema } from 'mongoose';
+import { BadRequestError } from '../errors/BadRequestError';
+import { NotFoundError } from '../errors/NotFoundError';
+import { InternalServerError } from '../errors/InternalServerError';
 
 export interface IUser {
   name: string,

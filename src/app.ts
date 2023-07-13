@@ -1,11 +1,11 @@
-import { DB_PATH } from './constants/constants';
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
+import { DB_PATH } from './constants/constants';
 import router from './routes';
 import { tempAuth } from './middleware/tempAuth';
 import { errorHandler } from './middleware/errorHandler';
-
-
+import { NotFoundError } from './errors/NotFoundError';
+import { ErrorPatternMessages } from './utils/enums';
 
 const { PORT = 3000 } = process.env;
 
@@ -17,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(tempAuth);
 
 app.use(router);
+app.use((req: Request, res: Response, next: NextFunction) => {
+  next(new NotFoundError(ErrorPatternMessages.NOT_FOUND_BASIC));
+});
 
 app.use(errorHandler);
 
@@ -25,7 +28,7 @@ const initDBConnect = async () => {
     mongoose.set('strictQuery', false);
 
     await mongoose.connect(DB_PATH);
-    console.log(`Соединение с базой данных установлено!`);
+    console.log('Соединение с базой данных установлено!');
 
     app.listen(PORT, () => {
       console.log(`App listening on port ${PORT}.`);
@@ -38,6 +41,5 @@ const initDBConnect = async () => {
     }
   }
 };
-
 
 initDBConnect();

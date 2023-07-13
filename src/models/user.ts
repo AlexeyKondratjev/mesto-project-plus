@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema<IUser>({
   avatar: {
     type: String,
     required: true
-  },
+  }
 });
 
 export default mongoose.model('user', userSchema);
