@@ -27,7 +27,7 @@ export const getUser = async (req: Request, res: Response, next: NextFunction) =
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return next(new NotFoundError(`${ErrorPatternMessages.NOT_FOUND_BY_ID} пользователя!`));
     }
-    if (err instanceof mongoose.Error.ValidationError || err instanceof mongoose.Error.CastError) {
+    if (err instanceof mongoose.Error.CastError) {
       return next(new BadRequestError(`${ErrorPatternMessages.BAD_REQUEST_DELETE} пользователя (id)!`));
     }
     return next(new InternalServerError(ErrorPatternMessages.SERVER_ERROR));

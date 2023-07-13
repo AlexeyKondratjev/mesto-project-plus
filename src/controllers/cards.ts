@@ -43,8 +43,7 @@ export const deleteCard = async (req: Request, res: Response, next: NextFunction
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return next(new NotFoundError(`${ErrorPatternMessages.NOT_FOUND_BY_ID} карточку!`));
     }
-    if (err instanceof mongoose.Error.ValidationError
-      || err instanceof mongoose.Error.CastError) {
+    if (err instanceof mongoose.Error.CastError) {
       return next(new BadRequestError(`${ErrorPatternMessages.BAD_REQUEST_DELETE} карточки!`));
     }
 
@@ -67,8 +66,7 @@ export const likeCard = async (req: ICustomRequest, res: Response, next: NextFun
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return next(new NotFoundError(`${ErrorPatternMessages.NOT_FOUND_BY_ID} карточку!`));
     }
-    if (err instanceof mongoose.Error.ValidationError
-      || err instanceof mongoose.Error.CastError) {
+    if (err instanceof mongoose.Error.CastError) {
       return next(new BadRequestError(`${ErrorPatternMessages.BAD_REQUEST_UPDATE} карточки!`));
     }
 
@@ -91,8 +89,7 @@ export const dislikeCard = async (req: ICustomRequest, res: Response, next: Next
     if (err instanceof mongoose.Error.DocumentNotFoundError) {
       return next(new NotFoundError(`${ErrorPatternMessages.NOT_FOUND_BY_ID} карточку!`));
     }
-    if (err instanceof mongoose.Error.ValidationError
-      || err instanceof mongoose.Error.CastError) {
+    if (err instanceof mongoose.Error.CastError) {
       return next(new BadRequestError(`${ErrorPatternMessages.BAD_REQUEST_UPDATE} карточки!`));
     }
 
