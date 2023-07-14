@@ -1,5 +1,6 @@
 import { Request } from 'express';
-import { ObjectId, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
+import { JwtPayload } from 'jsonwebtoken';
 import { BadRequestError } from '../errors/BadRequestError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { InternalServerError } from '../errors/InternalServerError';
@@ -7,7 +8,9 @@ import { InternalServerError } from '../errors/InternalServerError';
 export interface IUser {
   name: string,
   about: string,
-  avatar: string
+  avatar: string,
+  email: string,
+  password: string
 }
 
 export interface ICard {
@@ -20,7 +23,7 @@ export interface ICard {
 
 export interface ICustomRequest extends Request {
   user?: {
-    _id: string | ObjectId;
+    _id: string | JwtPayload;
   }
 }
 
