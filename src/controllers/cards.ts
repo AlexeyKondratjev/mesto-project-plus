@@ -6,6 +6,7 @@ import { ErrorPatternMessages, HttpResponseStatusCodes } from '../utils/enums';
 import { BadRequestError } from '../errors/BadRequestError';
 import { InternalServerError } from '../errors/InternalServerError';
 import { NotFoundError } from '../errors/NotFoundError';
+import { ForbiddenError } from '../errors/ForbiddenError';
 
 export const getCards = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -33,10 +34,17 @@ export const createCard = async (req: ICustomRequest, res: Response, next: NextF
   }
 };
 
-export const deleteCard = async (req: Request, res: Response, next: NextFunction) => {
+export const deleteCard = async (req: ICustomRequest, res: Response, next: NextFunction) => {
   try {
     const { cardId } = req.params;
-    const deletedCard = await Card.findByIdAndDelete(cardId).orFail();
+    const userId = req.user?._id;
+    const deletedCard = await Card.findById(cardId).orFail();
+
+    if (deletedCard.owner.toString() !== userId) {
+      return next(new ForbiddenError(`${ErrorPatternMessages.FORBIDDEN_DELETE} чужой карточки!`));
+    }
+
+    await Card.findByIdAndDelete(cardId).orFail();
 
     return res.status(HttpResponseStatusCodes.OK).send(deletedCard);
   } catch (err) {
